@@ -1,8 +1,3 @@
-using System;
-using System.Dynamic;
-
-using Microsoft.AspNetCore.Mvc;
-
 using Sat.Recruitment.Api.Controllers;
 
 using Xunit;

@@ -15,6 +15,16 @@ namespace Sat.Recruitment.Api.Controllers
 
         private readonly List<User> _users = new List<User>();
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name">Name of the user</param>
+        /// <param name="email">Email of the user</param>
+        /// <param name="address">Address of the user</param>
+        /// <param name="phone">Phone Number of the user</param>
+        /// <param name="userType">Type of the user</param>
+        /// <param name="money"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("/create-user")]
         public async Task<Result> CreateUser(string name, string email, string address, string phone, string userType, string money)
@@ -39,23 +49,25 @@ namespace Sat.Recruitment.Api.Controllers
             var reader = UserReader.ReadUsersFromFile();
 
             //Normalize email
-            var aux = newUser.Email.Split(new char[] { '@' }, StringSplitOptions.RemoveEmptyEntries);
+            var emailSplited = newUser.Email.Split(new char[] { '@' }, StringSplitOptions.RemoveEmptyEntries);
 
-            var atIndex = aux[0].IndexOf("+", StringComparison.Ordinal);
+            var atIndex = emailSplited[0].IndexOf("+", StringComparison.Ordinal);
 
-            aux[0] = atIndex < 0 ? aux[0].Replace(".", "") : aux[0].Replace(".", "").Remove(atIndex);
+            emailSplited[0] = atIndex < 0 ? emailSplited[0].Replace(".", "") : emailSplited[0].Replace(".", "").Remove(atIndex);
 
-            newUser.Email = string.Join("@", new string[] { aux[0], aux[1] });
+            newUser.Email = string.Join("@", new string[] { emailSplited[0], emailSplited[1] });
 
             while (reader.Peek() >= 0)
             {
-                var line = reader.ReadLineAsync().Result;
+                var line = await reader.ReadLineAsync();
+                var lineSplited = line.Split(',');
+
                 var user = new UserBuilder(
-                    name: line.Split(',')[0].ToString(),
-                    email: line.Split(',')[1].ToString(),
-                    address: line.Split(',')[3].ToString(),
-                    phone: line.Split(',')[2].ToString(),
-                    money: line.Split(',')[5].ToString()).Build(userType: line.Split(',')[4].ToString());
+                    name: lineSplited[0].ToString(),
+                    email: lineSplited[1].ToString(),
+                    address: lineSplited[3].ToString(),
+                    phone: lineSplited[2].ToString(),
+                    money: lineSplited[5].ToString()).Build(userType: lineSplited[4].ToString());
 
                 _users.Add(user);
             }

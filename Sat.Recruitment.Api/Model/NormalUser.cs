@@ -13,14 +13,11 @@ namespace Sat.Recruitment.Api.Model
                 var gif = decimal.Parse(money) * percentage;
                 Money = Money + gif;
             }
-            if (decimal.Parse(money) < 100)
+            if (decimal.Parse(money) < 100 && decimal.Parse(money) > 10)
             {
-                if (decimal.Parse(money) > 10)
-                {
-                    var percentage = Convert.ToDecimal(0.8);
-                    var gif = decimal.Parse(money) * percentage;
-                    Money = Money + gif;
-                }
+                var percentage = Convert.ToDecimal(0.8);
+                var gif = decimal.Parse(money) * percentage;
+                Money = Money + gif;
             }
         }
     }
