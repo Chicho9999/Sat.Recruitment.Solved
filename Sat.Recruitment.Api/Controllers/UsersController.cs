@@ -16,7 +16,7 @@ namespace Sat.Recruitment.Api.Controllers
         private readonly List<User> _users = new List<User>();
 
         /// <summary>
-        /// 
+        /// API Rest that creates a new User. 
         /// </summary>
         /// <param name="name">Name of the user</param>
         /// <param name="email">Email of the user</param>

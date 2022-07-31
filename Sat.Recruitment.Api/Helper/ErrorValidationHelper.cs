@@ -2,6 +2,14 @@
 {
     public static class ErrorValidationHelper
     {
+        /// <summary>
+        /// Validate if the form comes with empty information
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="email"></param>
+        /// <param name="address"></param>
+        /// <param name="phone"></param>
+        /// <param name="errors"></param>
         public static void ValidateErrors(string name, string email, string address, string phone, ref string errors)
         {
             if (name == null)

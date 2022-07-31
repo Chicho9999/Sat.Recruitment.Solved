@@ -2,8 +2,15 @@
 
 namespace Sat.Recruitment.Api.Model
 {
+    /// <summary>
+    /// Normal User Class
+    /// </summary>
     public class NormalUser : User
     {
+        /// <summary>
+        /// Method that calculate the money belonging to the user regarding his type.
+        /// </summary>
+        /// <param name="money"></param>
         public override void CalculatePercentage(string money)
         {
             if (decimal.Parse(money) > 100)

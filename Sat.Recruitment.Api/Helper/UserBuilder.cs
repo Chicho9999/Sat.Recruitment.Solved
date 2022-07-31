@@ -2,6 +2,9 @@
 
 namespace Sat.Recruitment.Api.Helper
 {
+    /// <summary>
+    /// Class that provide User Object Creation
+    /// </summary>
     public class UserBuilder
     {
         private readonly string name;
@@ -19,6 +22,11 @@ namespace Sat.Recruitment.Api.Helper
             this.money = money;
         }
 
+        /// <summary>
+        /// Build the User Object depending the type
+        /// </summary>
+        /// <param name="userType"></param>
+        /// <returns></returns>
         public User Build(string userType)
         {
             switch (userType)
