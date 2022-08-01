@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 namespace Sat.Recruitment.Api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
-    public partial class UsersController : ControllerBase
+    [Route("api/user")]
+    public class UsersController : ControllerBase
     {
 
         private readonly List<User> _users = new List<User>();
@@ -18,20 +18,15 @@ namespace Sat.Recruitment.Api.Controllers
         /// <summary>
         /// API Rest that creates a new User. 
         /// </summary>
-        /// <param name="name">Name of the user</param>
-        /// <param name="email">Email of the user</param>
-        /// <param name="address">Address of the user</param>
-        /// <param name="phone">Phone Number of the user</param>
-        /// <param name="userType">Type of the user</param>
-        /// <param name="money"></param>
+        /// <param name="userModel">Model of the User</param>
         /// <returns></returns>
         [HttpPost]
-        [Route("/create-user")]
-        public async Task<Result> CreateUser(string name, string email, string address, string phone, string userType, string money)
+        [Route("create-user/")]
+        public async Task<Result> CreateUser([FromBody]UserModel userModel)
         {
             var errors = "";
 
-            ErrorValidationHelper.ValidateErrors(name, email, address, phone, ref errors);
+            ErrorValidationHelper.ValidateErrors(userModel.Name, userModel.Email, userModel.Address, userModel.Phone, ref errors);
 
             if (errors != null && errors != "")
                 return await Task.FromResult(new Result()
@@ -40,11 +35,11 @@ namespace Sat.Recruitment.Api.Controllers
                     Errors = errors
                 });
 
-            var userBuilder = new UserBuilder(name, email, address, phone, money);
+            var userBuilder = new UserBuilder(userModel.Name, userModel.Email, userModel.Address, userModel.Phone, userModel.Money);
 
-            var newUser = userBuilder.Build(userType);
+            var newUser = userBuilder.Build(userModel.UserType);
 
-            newUser.CalculatePercentage(money);
+            newUser.CalculatePercentage(userModel.Money);
 
             var reader = UserReader.ReadUsersFromFile();
 
