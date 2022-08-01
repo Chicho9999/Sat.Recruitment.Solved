@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Sat.Recruitment.Api.Controllers
 {
+    /// <summary>
+    /// Class that manage Users.
+    /// </summary>
     [ApiController]
     [Route("api/user")]
     public class UsersController : ControllerBase
@@ -72,7 +75,7 @@ namespace Sat.Recruitment.Api.Controllers
             {
                 foreach (var user in _users)
                 {
-                    if (user.Email == newUser.Email || user.Name == newUser.Name || user.Address == newUser.Address || user.Phone == newUser.Phone)
+                    if ((user.Name == newUser.Name && user.Address == newUser.Address) || user.Email == newUser.Email || user.Phone == newUser.Phone)
                     {
                         throw new Exception("User is duplicated");
                     }
