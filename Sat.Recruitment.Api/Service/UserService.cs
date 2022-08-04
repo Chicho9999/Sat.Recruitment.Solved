@@ -1,4 +1,5 @@
-﻿using Sat.Recruitment.Api.Model;
+﻿using Sat.Recruitment.Api.Helper;
+using Sat.Recruitment.Api.Model;
 using Sat.Recruitment.Api.Repository.Interface;
 using Sat.Recruitment.Api.Service.Interfaces;
 using System;
@@ -10,12 +11,19 @@ namespace Sat.Recruitment.Api.Service
     public class UserService : IUserService
     {
         public IUserRepository UserRepository { get; }
+
         public UserService(IUserRepository userRepository)
         {
             UserRepository = userRepository;
         }
-        public async Task CreateUser(User newUser)
+        public async Task CreateUser(UserModel userModel)
         {
+            var userBuilder = new UserBuilder(userModel.Name, userModel.Email, userModel.Address, userModel.Phone, userModel.Money);
+
+            var newUser = userBuilder.Build(userModel.UserType);
+
+            newUser.CalculatePercentage(userModel.Money);
+
             //Normalize email
             var emailSplited = newUser.Email.Split(new char[] { '@' }, StringSplitOptions.RemoveEmptyEntries);
 

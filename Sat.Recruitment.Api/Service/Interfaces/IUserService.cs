@@ -5,6 +5,6 @@ namespace Sat.Recruitment.Api.Service.Interfaces
 {
     public interface IUserService
     {
-        Task CreateUser(User user);
+        Task CreateUser(UserModel user);
     }
 }

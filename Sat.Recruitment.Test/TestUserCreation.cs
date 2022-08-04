@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Sat.Recruitment.Api.Controllers;
 using Sat.Recruitment.Api.Model;
-using Sat.Recruitment.Api.Repository.Interface;
 using Sat.Recruitment.Api.Service.Interfaces;
 using System.Threading.Tasks;
 using Xunit;
@@ -17,7 +16,7 @@ namespace Sat.Recruitment.Test
         public async void TestCreateUserSuccess()
         {
             var iUserServiceMock = new Mock<IUserService>();
-            iUserServiceMock.Setup(x => x.CreateUser(It.IsAny<User>())).Returns(Task.CompletedTask);
+            iUserServiceMock.Setup(x => x.CreateUser(It.IsAny<UserModel>())).Returns(Task.CompletedTask);
             var userController = new UsersController(iUserServiceMock.Object);
 
             var userModel = new UserModel()
@@ -42,7 +41,7 @@ namespace Sat.Recruitment.Test
         {
             var iUserServiceMock = new Mock<IUserService>();
             var userController = new UsersController(iUserServiceMock.Object);
-            iUserServiceMock.Setup(x => x.CreateUser(It.IsAny<User>())).Throws(new System.Exception("User is duplicated"));
+            iUserServiceMock.Setup(x => x.CreateUser(It.IsAny<UserModel>())).Throws(new System.Exception("User is duplicated"));
 
             var userModel = new UserModel()
             {

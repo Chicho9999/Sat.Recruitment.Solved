@@ -40,13 +40,7 @@ namespace Sat.Recruitment.Api.Controllers
                 if (errors != null && errors != "")
                     throw new Exception(errors);
 
-                var userBuilder = new UserBuilder(userModel.Name, userModel.Email, userModel.Address, userModel.Phone, userModel.Money);
-
-                var newUser = userBuilder.Build(userModel.UserType);
-
-                newUser.CalculatePercentage(userModel.Money);
-
-                await UserService.CreateUser(newUser);
+                await UserService.CreateUser(userModel);
 
                 return await Task.FromResult(Ok(new Result()
                 {
