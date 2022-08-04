@@ -49,7 +49,7 @@ namespace Sat.Recruitment.Api.Helper
                         Phone = phone,
                         Money = decimal.Parse(money)
                     };
-                default:
+                case "Premium":
                     return new PremiunUser()
                     {
                         Name = name,
@@ -58,6 +58,9 @@ namespace Sat.Recruitment.Api.Helper
                         Phone = phone,
                         Money = decimal.Parse(money)
                     };
+                default:
+                    throw new System.Exception("The type of User should be Premiun, Super or Normal");
+                    
             }
         }
     }
